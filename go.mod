@@ -2,12 +2,17 @@ module github.com/udzura/golt2023-bicaskdb-bench
 
 go 1.20
 
-require github.com/octu0/bitcaskdb v1.6.1
+require (
+	github.com/montanaflynn/stats v0.7.1
+	github.com/octu0/bitcaskdb v1.6.1
+	github.com/olekukonko/tablewriter v0.0.5
+)
 
 require (
 	github.com/abcum/lcp v0.0.0-20201209214815-7a3f3840be81 // indirect
 	github.com/gofrs/flock v0.8.0 // indirect
 	github.com/klauspost/compress v1.16.5 // indirect
+	github.com/mattn/go-runewidth v0.0.9 // indirect
 	github.com/minio/highwayhash v1.0.2 // indirect
 	github.com/nats-io/jwt/v2 v2.4.1 // indirect
 	github.com/nats-io/nats-server/v2 v2.9.16 // indirect
