@@ -23,4 +23,6 @@ go.work
 */image.*
 *.image
 */*.image
+db/
+!db/.keep
 db/fileserver
