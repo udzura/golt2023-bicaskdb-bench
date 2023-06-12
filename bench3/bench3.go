@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strconv"
 	"time"
 
 	"github.com/google/uuid"
@@ -15,14 +16,21 @@ import (
 	"github.com/olekukonko/tablewriter"
 )
 
-var data []byte
-
-const N = 500
+var (
+	data []byte
+	N    int = 500
+)
 
 func init() {
 	data = make([]byte, 5*1024)
 	if _, err := rand.Read(data); err != nil {
 		panic(err)
+	}
+
+	if n2 := os.Getenv("FILES_N"); n2 != "" {
+		if parsed, err := strconv.ParseInt(n2, 10, 32); err == nil {
+			N = int(parsed)
+		}
 	}
 }
 
@@ -102,6 +110,12 @@ func benchFiles(ch chan time.Duration) error {
 		ch <- time.Since(start)
 		f.Sync()
 		f.Close()
+
+		if N > 500 {
+			if (i+1)%(N/10) == 0 {
+				fmt.Printf("%d times write...\n", i+1)
+			}
+		}
 	}
 	return nil
 }
@@ -123,6 +137,12 @@ func benchBitcaskdb(ch chan time.Duration) error {
 		}
 
 		ch <- time.Since(start)
+
+		if N > 500 {
+			if (i+1)%(N/10) == 0 {
+				fmt.Printf("%d times write...\n", i+1)
+			}
+		}
 	}
 	return nil
 }
